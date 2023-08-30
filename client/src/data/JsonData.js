@@ -11,7 +11,7 @@ export const divisionCardsJson = [
         cardHeader: "Division 2",
         cardTitle: "Admin Login",
         cardDes: "Admin login enables human verification of campaigns, ensuring authenticity by allowing authorized personnel to review.",
-        link: "/admin",
+        link: "/adminLogin",
         cardFooter: "Heirarchy - 02"
     },
     {

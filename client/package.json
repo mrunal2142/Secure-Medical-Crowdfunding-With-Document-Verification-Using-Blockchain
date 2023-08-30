@@ -17,6 +17,7 @@
     "bootstrap": "^5.3.1",
     "browserify-zlib": "latest",
     "ethers": "^5",
+    "firebase": "^10.3.0",
     "http": "npm:http-browserify",
     "http-browserify": "latest",
     "https": "npm:https-browserify",

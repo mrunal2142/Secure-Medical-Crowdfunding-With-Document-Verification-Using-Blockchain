@@ -27,7 +27,7 @@ const AppNav = () => {
               Master Admin
             </a>
 
-            <Link to="/admin" className={links}>
+            <Link to="/adminLogin" className={links}>
               Admin Login
             </Link>
 
