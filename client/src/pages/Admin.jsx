@@ -1,23 +1,24 @@
 import React, { useState } from 'react'
 import { AdminNav } from '../components/ComponentsIndex'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useAdminLoginContext } from '../contexts/AdminLoginContext'
+import { useAdminLoginContext } from '../contexts/admin_context/AdminLoginContext'
 import { Alert, AlertTitle } from '@mui/material'
 import { auth } from '../firebase/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
+import { useEstimatedDataContext } from '../contexts/admin_context/EstimatedDataContext'
 
 const Admin = () => {
   
   const navigation = useNavigate()
   const { info, setInfo } = useAdminLoginContext()
-  
+  const { getEstimatedData } = useEstimatedDataContext()
+
   useState(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid
-        console.log(uid)
         setInfo({
           uid: user.uid,
           email: user.email,
@@ -29,6 +30,8 @@ const Admin = () => {
         navigation('/')
       }
     })
+
+    getEstimatedData()
   }, [])
 
   return (
@@ -39,13 +42,13 @@ const Admin = () => {
           <AlertTitle>Account Info</AlertTitle>
           <div className="d-flex gap-3">
             <span>
-              <strong> UID</strong> - {info.uid} {' '}
+              <strong> UID</strong> - {info.uid}{' '}
             </span>
             <span>
-              <strong> Email</strong> - {info.email} {' '}
+              <strong> Email</strong> - {info.email}{' '}
             </span>
             <span>
-              <strong> Last Signin Time</strong> - {info.lstTimeSignIn} 
+              <strong> Last Signin Time</strong> - {info.lstTimeSignIn}
             </span>
           </div>
         </Alert>

@@ -2,7 +2,7 @@ import React from 'react'
 import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined'
 import KeyboardTabOutlinedIcon from '@mui/icons-material/KeyboardTabOutlined'
 import { Alert } from '@mui/material'
-import { useAdminLoginContext } from '../contexts/AdminLoginContext'
+import { useAdminLoginContext } from '../contexts/admin_context/AdminLoginContext'
 
 const AdminLogin = () => {
   const {
@@ -17,10 +17,10 @@ const AdminLogin = () => {
   return (
     <React.Fragment>
       <div
-        class="card shadow position-absolute top-50 start-50 translate-middle"
+        className="card shadow position-absolute top-50 start-50 translate-middle"
         style={{ width: '35rem' }}
       >
-        <div class="card-body m-2">
+        <div className="card-body m-2">
           <div className="d-flex gap-1 justify-content-center">
             <AdminPanelSettingsOutlinedIcon className="m-2" />
             <p className="fs-3">Admin Login</p>
@@ -34,13 +34,13 @@ const AdminLogin = () => {
           </div>
 
           <div>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
                 @
               </span>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Username *"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
@@ -53,13 +53,13 @@ const AdminLogin = () => {
                 }}
               />
             </div>
-            <div class="input-group mb-3">
-              <span class="input-group-text" id="basic-addon1">
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
                 #
               </span>
               <input
                 type="password"
-                class="form-control"
+                className="form-control"
                 placeholder="Password *"
                 aria-label="Password"
                 aria-describedby="basic-addon1"
@@ -73,9 +73,9 @@ const AdminLogin = () => {
               />
             </div>
 
-            <div class="input-group d-flex gap-2">
+            <div className="input-group d-flex gap-2">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="checkbox"
                 value=""
                 aria-label="Checkbox for following text input"
@@ -84,10 +84,10 @@ const AdminLogin = () => {
               <span>Remember me</span>
             </div>
 
-            <div class="d-grid gap-2 mt-3">
+            <div className="d-grid gap-2 mt-3">
               <button
                 id="signInBtn"
-                class="btn btn-primary btn-sm"
+                className="btn btn-primary btn-sm"
                 type="button"
                 onClick={signIn}
               >

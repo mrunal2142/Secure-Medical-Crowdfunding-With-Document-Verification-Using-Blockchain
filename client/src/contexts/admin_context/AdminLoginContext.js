@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebase-config"
+import { auth } from "../../firebase/firebase-config"
 
 const AdminLogin = createContext()
 
