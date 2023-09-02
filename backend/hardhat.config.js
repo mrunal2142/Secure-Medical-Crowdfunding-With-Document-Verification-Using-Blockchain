@@ -24,6 +24,10 @@ module.exports = {
       chainId: 324,
       zksync: true,
     },
+    sepolia : {
+      url: 'https://rpc.ankr.com/eth_sepolia',
+      accounts : [`0xb6d6211dc047dceaba0dd30d2413ceef303d85e67a467f18330ad33f6aeb948f`]
+    }
   },
   paths: {
     artifacts: "./artifacts-zk",
@@ -31,8 +35,17 @@ module.exports = {
     sources: "./contracts",
     tests: "./test",
   },
+  
   solidity: {
     version: "0.8.17",
+    defaultNetwork: 'Sepolia',
+    networks: {
+      hardhat: {},
+      sepolia : {
+        url: 'https://rpc.ankr.com/eth_sepolia',
+        accounts : [`0xb6d6211dc047dceaba0dd30d2413ceef303d85e67a467f18330ad33f6aeb948f`]
+      }
+    },
     settings: {
       optimizer: {
         enabled: true,

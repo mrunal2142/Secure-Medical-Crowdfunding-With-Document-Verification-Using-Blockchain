@@ -735,7 +735,7 @@
     "@sentry/types" "5.30.0"
     tslib "^1.9.3"
 
-"@thirdweb-dev/contracts@^3.8.0":
+"@thirdweb-dev/contracts@^3.9.2":
   version "3.9.2"
   resolved "https://registry.npmjs.org/@thirdweb-dev/contracts/-/contracts-3.9.2.tgz"
   integrity sha512-UGbGgHLLC0Fl9c3agGh2eame2ZzurJyw/SNlutBkTebNA0ptpLmE+PqD5hxdcciQ3NFgdFqJmWtXWjFN8S1Fig==
