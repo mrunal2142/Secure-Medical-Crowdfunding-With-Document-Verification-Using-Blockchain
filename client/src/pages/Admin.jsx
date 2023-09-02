@@ -6,13 +6,15 @@ import { Alert, AlertTitle } from '@mui/material'
 import { auth } from '../firebase/firebase-config'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useEstimatedDataContext } from '../contexts/admin_context/EstimatedDataContext'
+import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
 
 const Admin = () => {
-  
   const navigation = useNavigate()
   const { info, setInfo } = useAdminLoginContext()
   const { getEstimatedData } = useEstimatedDataContext()
-
+  
+  const { address } = useWallectConnectContext()
+  
   useState(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -38,9 +40,10 @@ const Admin = () => {
     <React.Fragment>
       <AdminNav />
       <div className="container">
-        <Alert severity="info" className="mt-3 mb-3">
-          <AlertTitle>Account Info</AlertTitle>
-          <div className="d-flex gap-3">
+        <div className="alert alert-primary mt-2 text-center d-flex flex-column" role="alert">
+          <strong>Account Information</strong>
+          {address ? <span className="text fs-6 p-1">MetaMask Wallet Connected ! ( address - {address} ) </span> : <strong className="text-danger fs-6">MetaMask Wallet Not Connected</strong> }
+          <div className="d-flex gap-3 fs-6 justify-content-center ">
             <span>
               <strong> UID</strong> - {info.uid}{' '}
             </span>
@@ -51,7 +54,7 @@ const Admin = () => {
               <strong> Last Signin Time</strong> - {info.lstTimeSignIn}
             </span>
           </div>
-        </Alert>
+        </div>
         <Outlet />
       </div>
     </React.Fragment>

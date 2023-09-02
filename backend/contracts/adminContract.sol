@@ -10,7 +10,7 @@ contract adminContract {
         string patientName;
         string patientTag;
         string disease;
-        uint256 amount; // in ethers
+        string amount; // in ethers
         string fundRaiserName;
         string adminHashCode;
     }
@@ -29,7 +29,7 @@ contract adminContract {
         string memory _patientName,
         string memory _patientTag,
         string memory _disease,
-        uint256 _amount, // in ethers
+        string memory _amount, 
         string memory _fundRaiserName,
         string memory _adminHashCode
     ) public {

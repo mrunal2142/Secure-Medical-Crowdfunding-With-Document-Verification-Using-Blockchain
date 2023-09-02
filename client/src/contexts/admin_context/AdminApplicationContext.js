@@ -37,7 +37,7 @@ export const AdminApplicationContext = ({ children }) => {
 
         setShowCheckAlert(true)
         setCheckAlert({
-            severity: "info",
+            severity: "primary",
             message: "Please wait..."
         })
 
@@ -52,7 +52,7 @@ export const AdminApplicationContext = ({ children }) => {
                     document.querySelector('#admin-application-div').classList.remove('disabled')
                 } else {
                     setCheckAlert({
-                        severity: "error",
+                        severity: "danger",
                         message: "The applicant is not eligible for registration | Please wait..."
                     })
                 }

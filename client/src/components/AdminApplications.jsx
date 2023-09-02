@@ -1,8 +1,9 @@
 import React from 'react'
 import { useAdminApplicationContext } from '../contexts/admin_context/AdminApplicationContext'
-import { Alert } from '@mui/material'
 import { useEstimatedDataContext } from '../contexts/admin_context/EstimatedDataContext'
 import '../styles/Home.css'
+import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
+import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
 
 const AdminApplications = () => {
   const {
@@ -16,8 +17,20 @@ const AdminApplications = () => {
     checkEligibility,
     generateHash,
   } = useAdminApplicationContext()
-
   const { estData } = useEstimatedDataContext()
+  const { createApplicationTransaction } = useAdminBlockChainContext()
+  const { address } = useWallectConnectContext()
+
+  const handleClick = async () => {
+    const obj = {
+      ...eligibility,
+      ...application,
+      aadharNo: parseInt(application.aadharNo),
+      address: address,
+    }
+    await createApplicationTransaction(obj)
+    console.log('---------- ho gya from adminApplications.jsx ------ ')
+  }
 
   return (
     <React.Fragment>
@@ -35,9 +48,9 @@ const AdminApplications = () => {
 
         {showCheckAlert && (
           <div className="m-3 position-absolute top-0 start-50 translate-middle-x">
-            <Alert severity={checkAlert.severity} className="flex-grow-1">
+            <div className={`alert alert-${checkAlert.severity}`} role="alert">
               {checkAlert.message}
-            </Alert>
+            </div>
           </div>
         )}
 
@@ -274,6 +287,7 @@ const AdminApplications = () => {
                 type="button"
                 id="upload-blockChain"
                 className="btn btn-primary btn-sm mt-3 disabled"
+                onClick={handleClick}
               >
                 Upload Application
               </button>

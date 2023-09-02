@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { auth } from '../firebase/firebase-config'
 import { signOut } from 'firebase/auth'
+import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
 
 const AdminNav = () => {
-  
   const userSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -18,10 +18,12 @@ const AdminNav = () => {
   const links =
     'link-dark link-underline-opacity-0 link-underline-opacity-0-hover'
 
+  const { address, connect } = useWallectConnectContext()
+
   return (
     <React.Fragment>
-      <nav class="navbar bg-body shadow-sm border">
-        <div class="container-fluid fs-5 p-2 container">
+      <nav className="navbar bg-body shadow-sm border">
+        <div className="container-fluid fs-5 p-2 container">
           <Link to="dashboard" className={links}>
             Admin Divison
           </Link>
@@ -35,6 +37,13 @@ const AdminNav = () => {
             <Link to="estimations" className={links}>
               Estimations
             </Link>
+            <span className="btn btn-sm fs-6 p-0" onClick={connect}>
+              {address ? (
+                <span >Connected</span>
+              ) : (
+                <span >Connect Metamask</span>
+              )}
+            </span>
             <span className="btn btn-sm fs-6 p-0" onClick={userSignOut}>
               Sign Out
             </span>
