@@ -66,7 +66,7 @@ export const AdminApplicationContext = ({ children }) => {
     }
 
     //step - 02 - generate hash for user data 
-    const SHA256 = require("crypto-js/sha256");
+    // const SHA256 = require("crypto-js/sha256");
     const generateHash = () => {
 
         const message = application.aadharNo + application.panNo +

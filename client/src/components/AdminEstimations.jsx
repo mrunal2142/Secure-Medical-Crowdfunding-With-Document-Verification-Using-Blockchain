@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useEstimatedDataContext } from '../contexts/admin_context/EstimatedDataContext'
-import { Alert } from '@mui/material'
-const AdminEstimations = () => {
-  const { estData, dataLoaded, getEstimatedData } = useEstimatedDataContext()
 
+const AdminEstimations = () => {
+  
+  const { estData, dataLoaded } = useEstimatedDataContext()
 
   return (
     <>
