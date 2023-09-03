@@ -2,16 +2,20 @@ import { createContext, useContext, useEffect, useState } from "react";
 import sha256 from 'crypto-js/sha256';
 import hmacSHA512 from 'crypto-js/hmac-sha512';
 import Base64 from 'crypto-js/enc-base64';
+import { useAdminBlockChainContext } from "../blockchain_context/AdminBlockChainContext";
 
 const AdminApplication = createContext()
 
 export const AdminApplicationContext = ({ children }) => {
 
-    const initalEligibility = {
+    
+
+
+    const initalEligibilityState = {
         disease: "",
         askingValue: ""
     }
-    const [eligibility, setEligibility] = useState(initalEligibility)
+    const [eligibility, setEligibility] = useState(initalEligibilityState)
 
     const [showCheckAlert, setShowCheckAlert] = useState(false)
     const initalCheckAlert = {
@@ -93,9 +97,13 @@ export const AdminApplicationContext = ({ children }) => {
         }
     }, [isVerified])
 
-    //step - 04 - upload data to blockchain 
+    //step - 04 - upload data to blockchain - ( done in admin blockchain context )
 
     return (<AdminApplication.Provider value={{
+
+        initalEligibilityState,
+        initialApplicationState,
+
         eligibility, setEligibility,
         showCheckAlert, setShowCheckAlert,
         checkAlert, setCheckAlert,

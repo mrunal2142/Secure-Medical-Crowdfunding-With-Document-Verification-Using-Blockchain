@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import {
     useContract,
     useContractWrite,
@@ -10,13 +10,25 @@ export const AdminBlockChain = createContext()
 
 export const AdminBlockChainContext = ({ children }) => {
 
+    const [showLoader, setShowerLoader] = useState({
+        loaderTitle: '',
+        loaderMessage: '',
+        loaderFlag: false
+    })
+
+    
+
     const { contract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
 
     const { mutateAsync: createApplication } = useContractWrite(contract, "createApplication")
 
     const createApplicationTransaction = async (obj) => {
         try {
-            console.log('please wait ... ')
+            setShowerLoader({
+                loaderTitle: 'Transaction in process',
+                loaderMessage: 'Your transaction is in the queue. Please be patient while miners confirm it',
+                loaderFlag: true
+            })
             const data = await createApplication({
                 args: [
                     obj.address,
@@ -30,14 +42,35 @@ export const AdminBlockChainContext = ({ children }) => {
                     obj.askingValue,
                     obj.fundRaiserName,
                     obj.hashCode
-            ]});
+                ]
+            });
+            setShowerLoader({
+                loaderFlag: true,
+                loaderTitle: 'Transaction confirmed ! ',
+                loaderMessage: 'Transaction successful. Please be patient for a moment.',
+            })
             console.info("contract call successs", data);
         } catch (e) {
-            console.error('createApplicationTraction error --- ' + e)
+            console.info('createApplicationTraction error --- ' + e);
+            setShowerLoader({
+                loaderFlag: true,
+                loaderTitle: 'Transaction Failed ! ',
+                loaderMessage: 'Oops! Something went wrong with your transaction. \n ' + e,
+            })
+            console.info("-------------------------", e);
+            
         }
+        setTimeout(() => {
+            setShowerLoader({
+                loaderFlag: false
+            });
+        }, 3000);
+        
     }
 
     return (<AdminBlockChain.Provider value={{
+        showLoader, setShowerLoader,
+       
         createApplicationTransaction
     }}>
         {children}

@@ -1,4 +1,5 @@
 export { default as DivisionCards} from './DivisionCards'
+export {default as Loader} from './Loader'
 export { default as AppNav} from './AppNav'
 export { default as AppMain} from './AppMain'
 export { default as AdminLogin} from './AdminLogin'

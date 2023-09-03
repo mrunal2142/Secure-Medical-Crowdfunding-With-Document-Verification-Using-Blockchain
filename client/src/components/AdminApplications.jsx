@@ -4,9 +4,12 @@ import { useEstimatedDataContext } from '../contexts/admin_context/EstimatedData
 import '../styles/Home.css'
 import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
 import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
+import {Loader} from './ComponentsIndex'
 
 const AdminApplications = () => {
   const {
+    initalEligibilityState,
+    initialApplicationState,
     eligibility,
     setEligibility,
     showCheckAlert,
@@ -29,12 +32,11 @@ const AdminApplications = () => {
       address: address,
     }
     await createApplicationTransaction(obj)
-    console.log('---------- ho gya from adminApplications.jsx ------ ')
   }
 
   return (
     <React.Fragment>
-      <div className="border" id="main-div" style={{ height: '72vh' }}>
+      <div className="border" id="main-div" style={{ height: '70vh' }}>
         <div
           id="main-admin-heading"
           className="text-center d-flex flex-column mt-4 mb-4"
