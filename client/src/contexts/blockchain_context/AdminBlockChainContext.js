@@ -16,8 +16,6 @@ export const AdminBlockChainContext = ({ children }) => {
         loaderFlag: false
     })
 
-    
-
     const { contract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
 
     const { mutateAsync: createApplication } = useContractWrite(contract, "createApplication")
@@ -58,20 +56,43 @@ export const AdminBlockChainContext = ({ children }) => {
                 loaderMessage: 'Oops! Something went wrong with your transaction. \n ' + e,
             })
             console.info("-------------------------", e);
-            
+
         }
         setTimeout(() => {
             setShowerLoader({
                 loaderFlag: false
             });
         }, 3000);
-        
+
     }
+
+    const getAllApplicationsTransaction = async () => {
+        try {
+            const data = await contract.call('getAllApplications');
+            const parsedData = data.map((application, index) => ({
+                admin: application.admin,
+                aadharNo: application.aadharNo.toString(),
+                panNo: application.panNo,
+                patientName: application.patientName,
+                patientTag: application.patientTag,
+                disease: application.disease,
+                amount: application.amount,
+                fundRaiserName: application.fundRaiserName,
+                adminHashCode: application.adminHashCode
+            }))
+            console.log('--- data parsed --- ')
+            return parsedData
+        } catch (e) {
+            console.error('getAllApplicationsTransaction' + e)
+        }
+    }
+
+
 
     return (<AdminBlockChain.Provider value={{
         showLoader, setShowerLoader,
-       
-        createApplicationTransaction
+
+        createApplicationTransaction, getAllApplicationsTransaction
     }}>
         {children}
     </AdminBlockChain.Provider>)
