@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useWallectConnectContext } from '../../contexts/blockchain_context/walletConnectContext'
+import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
 
 const CampaignNav = () => {
   const links =
