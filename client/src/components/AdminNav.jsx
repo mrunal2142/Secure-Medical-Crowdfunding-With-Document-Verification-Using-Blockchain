@@ -37,14 +37,14 @@ const AdminNav = () => {
             <Link to="estimations" className={links}>
               Estimations
             </Link>
-            <span className="btn btn-sm fs-6 p-0" onClick={connect}>
+            <span className={address ?  `btn btn-primary btn-sm  p-1`   : `btn btn-warning btn-sm p-1`}onClick={connect}>
               {address ? (
                 <span >Connected</span>
               ) : (
                 <span >Connect Metamask</span>
               )}
             </span>
-            <span className="btn btn-sm fs-6 p-0" onClick={userSignOut}>
+            <span className="btn btn-danger btn-sm  p-1" onClick={userSignOut}>
               Sign Out
             </span>
           </div>

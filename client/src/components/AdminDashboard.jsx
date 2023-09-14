@@ -67,9 +67,9 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <div id="admin-dashboard-self-data-div overflow-auto">
+          <div id="admin-dashboard-self-data-div overflow-auto ">
             
-            <div className="row border-bottom bg-light  round text-center m-2 mt-4">
+            <div className="row border-bottom border-top bg-light  round text-center m-2 mt-4 p-1">
               <div className="col fs-6">Admin</div>
               <div className="col fs-6">Aadhar No</div>
               <div className="col fs-6">Pan No</div>
@@ -77,8 +77,8 @@ const AdminDashboard = () => {
               <div className="col fs-6">Patient Tag</div>
               <div className="col fs-6">Disease</div>
               <div className="col fs-6">Amount</div>
-              <div className="col fs-6">Fund Raiser Name</div>
-              <div className="col fs-6">Admin HashCode</div>
+              <div className="col fs-6">Fund Raiser</div>
+              <div className="col fs-6">HashCode</div>
             </div>
 
             <div id="data-div" className="m-2 mt-4">

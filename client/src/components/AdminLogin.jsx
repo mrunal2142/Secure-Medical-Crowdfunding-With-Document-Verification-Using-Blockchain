@@ -21,22 +21,41 @@ const AdminLogin = () => {
         style={{ width: '35rem' }}
       >
         <div className="card-body m-2">
-          
           {infoAlert && (
-            <div className="alert alert-primary" role="alert">
-              Please wait ...
+            <div className="alert alert-primary d-flex" role="alert">
+              Please wait 
+             
+                <div
+                  class="spinner-border spinner-border-sm ms-2"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              
             </div>
-          )}
+          )} 
 
           {successAlert && (
             <div className="alert alert-success" role="alert">
-              Authentication Successful | Please wait ...
+              Authentication Successful | Please wait 
+              <div
+                  class="spinner-border spinner-border-sm ms-2"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
-          )}
+          )} 
 
           {errorAlert && (
             <div className="alert alert-success" role="alert">
-              Authentication failed | Please wait ...
+              Authentication failed | Please wait 
+              <div
+                  class="spinner-border spinner-border-sm ms-2"
+                  role="status"
+                >
+                  <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
           )}
 
