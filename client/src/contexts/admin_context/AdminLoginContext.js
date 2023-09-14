@@ -44,7 +44,12 @@ export const AdminLoginContext = ({ children }) => { // for index.js
                 const errorMessage = error.message;
                 console.error(errorCode + " --- " + errorMessage)
                 setErrorAlert(true)
+                setInfoAlert(false)
                 setErrorMsg(errorCode + " - " + errorMessage)
+                setTimeout(() => {
+                    setErrorAlert(false)
+                    document.getElementById('signInBtn').disabled = false
+                }, 3000)
             });
     }
 

@@ -41,7 +41,7 @@ const AdminApplications = () => {
           id="main-admin-heading"
           className="text-center d-flex flex-column mt-4 mb-4"
         >
-          <span className="fs-5">Applications</span>
+          <span className="fs-4">Applications</span>
           <span>
             Fund seeker eligibility & application process with human
             verification.

@@ -39,7 +39,7 @@ const AdminDashboard = () => {
           id="main-dashboard-heading"
           className="text-center d-flex flex-column mt-4 mb-4"
         >
-          <span className="fs-5">Uploaded Applications</span>
+          <span className="fs-4">Uploaded Applications</span>
           <span>Application uploaded by above mentioned wallet address.</span>
         </div>
 

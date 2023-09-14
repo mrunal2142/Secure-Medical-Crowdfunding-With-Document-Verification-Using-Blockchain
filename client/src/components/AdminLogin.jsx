@@ -48,7 +48,7 @@ const AdminLogin = () => {
           )} 
 
           {errorAlert && (
-            <div className="alert alert-success" role="alert">
+            <div className="alert alert-danger" role="alert">
               Authentication failed | Please wait 
               <div
                   class="spinner-border spinner-border-sm ms-2"
@@ -56,6 +56,8 @@ const AdminLogin = () => {
                 >
                   <span class="visually-hidden">Loading...</span>
                 </div>
+                <br></br>
+                <span>Error Message - {errorMsg}</span>
             </div>
           )}
 
