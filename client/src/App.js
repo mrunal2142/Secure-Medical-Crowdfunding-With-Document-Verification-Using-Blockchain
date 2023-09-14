@@ -1,6 +1,6 @@
 import React from 'react'
 import { Admin, CrowdFunding } from './pages/PageIndex'
-import { AdminDashboard, AppMain, AppNav, AdminLogin, AdminApplications, AdminEstimations } from './components/ComponentsIndex'
+import { AdminDashboard, AppMain, AppNav, AdminLogin, AdminApplications, AdminEstimations, CampaignCatalog, CampaignCreate, CampaignMyCatalog } from './components/ComponentsIndex'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AdminLoginContext } from './contexts/admin_context/AdminLoginContext';
 import { EstimatedDataContext } from './contexts/admin_context/EstimatedDataContext';
@@ -33,7 +33,11 @@ const App = () => {
                         <Route path='applications' element={<AdminApplications />} />
                         <Route path='estimations' element={<AdminEstimations />} />
                       </Route>
-                      <Route path='/crowdFunding' element={<CrowdFunding />} />
+                      <Route path='/crowdFunding' element={<CrowdFunding />} >
+                        <Route path='campaignCatalog' element={<CampaignCatalog />} />
+                        <Route path='CampaignCreate' element={<CampaignCreate />} />
+                        <Route path='CampaignMyCatalog' element={<CampaignMyCatalog />} />
+                      </Route>
                     </Routes>
                   </div>
                 </React.Fragment>

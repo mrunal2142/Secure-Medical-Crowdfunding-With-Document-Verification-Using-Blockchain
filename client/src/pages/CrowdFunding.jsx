@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { CampaignNav } from '../components/ComponentsIndex'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const CrowdFunding = () => {
+  
+  const navigation = useNavigate()
+  useEffect(() => {
+    navigation('/crowdFunding/campaignCatalog')
+  }, [])
+ 
   return (
-    <div>CrowdFunding  
-      | starting CrowdFunding - 14/9/2023 | 
-    </div>
+    <React.Fragment>
+      <CampaignNav />
+      <Outlet />
+    </React.Fragment>
   )
 }
 
