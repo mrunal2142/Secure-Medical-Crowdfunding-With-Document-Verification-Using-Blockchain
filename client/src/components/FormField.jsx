@@ -25,6 +25,8 @@ const FormField = ({
             placeholder="Elaborate your need"
             id="floatingTextarea2"
             style={{ height: '100px' }}
+            value={value}
+            onChange={handleChange}
           />
         ) : (
           <input

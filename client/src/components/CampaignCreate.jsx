@@ -1,15 +1,22 @@
 import React, { useState } from 'react'
 import { FormField } from './ComponentsIndex'
 import { useCampaignBlockchainContext } from '../contexts/blockchain_context/CampaignBlockchainContext'
+import { ethers } from 'ethers'
+import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
+import { useContract, useContractWrite } from '@thirdweb-dev/react'
+import { useNavigate } from 'react-router-dom'
 
 const CampaignCreate = () => {
   const {
     alert,
     showApplicationData,
     applicationData,
-    setApplicationData,
     checkHashEligibility,
+    // for contract
+    setShowLoader,
   } = useCampaignBlockchainContext()
+
+  const { address } = useWallectConnectContext()
 
   const [campaignForm, setCampaignForm] = useState({
     aadharNumber: '',
@@ -20,7 +27,6 @@ const CampaignCreate = () => {
   })
 
   const handleFormFieldChange = (fieldName, e) => {
-    //takes a key press event 'e'
     setCampaignForm((prev) => ({
       ...prev,
       [fieldName]: e.target.value,
@@ -29,6 +35,64 @@ const CampaignCreate = () => {
 
   const checkEligibility = async () => {
     await checkHashEligibility(campaignForm)
+  }
+
+  /* CAMPAIGN APPLICATION CONTRACT */
+  const { contract } = useContract('0xb13F0A53508d35413cD5c8e3298ffb31E4B33460')
+  const { mutateAsync: createCampaigns, isLoading } = useContractWrite(
+    contract,
+    'createCampaigns',
+  )
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault()
+
+    //set show loader is from campaign blockchain context
+    try {
+      setShowLoader({
+        loaderTitle: 'Transaction in process',
+        loaderMessage:
+          'Your transaction is in the queue. Please be patient while miners confirm it',
+        loaderFlag: true,
+      })
+
+      const data = await createCampaigns({
+        args: [
+          parseInt(campaignForm.aadharNumber),
+          campaignForm.hashCode,
+          ethers.utils.parseUnits(applicationData.amount, 18),
+          address,
+          campaignForm.campaignTitle,
+          campaignForm.campaignDescription,
+          new Date(campaignForm.campaignDeadline).getTime(),
+        ],
+      })
+
+      console.info('contract call successs', data)
+      setShowLoader({
+        loaderFlag: true,
+        loaderTitle: 'Transaction confirmed ! ',
+        loaderMessage:
+          'Transaction successful. Please be patient for a moment.',
+      })
+
+    } catch (e) {
+      console.info('----- createCampaignsTransaction error ----- ' + e)
+      setShowLoader({
+        loaderFlag: true,
+        loaderTitle: 'Transaction Failed ! ',
+        loaderMessage:
+          'Oops! Something went wrong with your transaction. \n ' + e,
+      })
+    }
+    setTimeout(() => {
+      setShowLoader({
+        loaderFlag: false,
+      })
+      navigate('/crowdFunding/CampaignMyCatalog')
+    }, 3000)
   }
 
   return (
@@ -47,7 +111,7 @@ const CampaignCreate = () => {
           conducting a verification process. Thank you for your cooperation.
         </div>
 
-        <form className="p-4">
+        <form className="p-4" onSubmit={handleSubmit}>
           <div id="med-application">
             <div
               id="med-application-heading"
@@ -94,80 +158,6 @@ const CampaignCreate = () => {
                 />
               </div>
             </div>
-
-            {/* <div className="row" id="Disease-askingValue-info">
-                <div className="col-lg-6">
-                  <FormField
-                    labelFor="diseaseName"
-                    labelTitle="Disease Name"
-                    isTextArea={false}
-                    type="text"
-                    id="diseaseName"
-                    placeHolder=""
-                    value={campaignForm.diseaseName}
-                    handleChange={(e) =>
-                      handleFormFieldChange('diseaseName', e)
-                    }
-                  />
-                </div>
-
-                <div className="col-lg-6">
-                  <FormField
-                    labelFor="askingValue"
-                    labelTitle="Asking Value"
-                    isTextArea={false}
-                    type="text"
-                    id="askingValue"
-                    placeHolder="Asking value in ETH*"
-                    value={campaignForm.askingValue}
-                    handleChange={(e) =>
-                      handleFormFieldChange('askingValue', e)
-                    }
-                  />
-                </div>
-              </div> */}
-
-            {/* <div className="row" id="Disease-askingValue-info">
-                <div className="col-lg-6">
-                  <FormField
-                    labelFor="patientTag"
-                    labelTitle="Patient Tag"
-                    isTextArea={false}
-                    type="text"
-                    id="patientTag"
-                    placeHolder="patient Tag "
-                    value={campaignForm.patientTag}
-                    handleChange={(e) => handleFormFieldChange('patientTag', e)}
-                    extra="Medical Confidential Data *"
-                  />
-                </div>
-
-                <div className="col-lg-6">
-                  <FormField
-                    labelFor="patientName"
-                    labelTitle="Patient Name"
-                    isTextArea={false}
-                    type="text"
-                    id="patientName"
-                    placeHolder="Registered patient's name"
-                    value={campaignForm.patientName}
-                    handleChange={(e) =>
-                      handleFormFieldChange('patientName', e)
-                    }
-                  />
-                </div>
-              </div> */}
-
-            {/* <FormField
-                labelFor="funderName"
-                labelTitle="Funder's Name"
-                isTextArea={false}
-                type="text"
-                id="funderName"
-                placeHolder="Please enter your name"
-                value={campaignForm.name}
-                handleChange={(e) => handleFormFieldChange('name', e)}
-              /> */}
 
             <div className="row">
               <div className="col-lg-6 p-2">
@@ -257,10 +247,9 @@ const CampaignCreate = () => {
               labelTitle="Deadline"
               isTextArea={false}
               type="date"
-              id="campaignImage"
-
-              // value={campaignForm.campaignImage}
-              // handleChange={(e) => handleFormFieldChange('campaignImage', e)}
+              id="campaignDeadline"
+              value={campaignForm.campaignDeadline}
+              handleChange={(e) => handleFormFieldChange('campaignDeadline', e)}
             />
 
             <button className="btn btn-primary col-lg-6 mb-3" type="submit">

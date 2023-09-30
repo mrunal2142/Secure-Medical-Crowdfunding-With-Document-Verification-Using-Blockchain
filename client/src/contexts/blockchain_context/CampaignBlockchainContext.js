@@ -2,34 +2,37 @@ import { createContext, useContext, useState } from "react";
 import {
     useContract,
     useContractWrite,
-    useContractRead,
 } from '@thirdweb-dev/react'
-import sha256 from 'crypto-js/sha256';
-import hmacSHA512 from 'crypto-js/hmac-sha512';
-import Base64 from 'crypto-js/enc-base64';
+import { ethers } from 'ethers'
+import { useWallectConnectContext } from "./walletConnectContext";
 
 
 export const CampaignBlockchain = createContext()
 
 export const CampaignBlockchainContext = ({ children }) => {
 
-
+    
     const [alert, setAlert] = useState({
         flag: false,
         alertType: "",
         alertMessage: ""
     })
     const [showApplicationData, setShowApplicationData] = useState(false)
-    const [applicationData, setApplicationData] = useState([])
-    /* ADMIN CONTRACT */
-    // const { contract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
-    const { contract } = useContract('0xfD8545c2A69d93C20f40019C764845562864f18b')
+    const [applicationData, setApplicationData] = useState({})
+    const [showLoader, setShowLoader] = useState({
+        loaderTitle: '',
+        loaderMessage: '',
+        loaderFlag: false
+    })
 
+    /* ADMIN CONTRACT */
+    // const { tempcontract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
+    const { contract } = useContract('0xfD8545c2A69d93C20f40019C764845562864f18b')
     const checkHashEligibility = async (obj) => {
         try {
+            
             const data = await contract.call("checkValidHashCode", [obj.aadharNumber, obj.hashCode])
             if (data) {
-
                 setAlert({
                     flag: true,
                     alertType: "success",
@@ -73,14 +76,13 @@ export const CampaignBlockchainContext = ({ children }) => {
         }
     }
 
-
-
-
     return (<CampaignBlockchain.Provider value={{
         alert, setAlert,
         showApplicationData, setShowApplicationData,
         applicationData, setApplicationData,
+        showLoader, setShowLoader,
 
+        
         checkHashEligibility
     }}>
         {children}
