@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import sha256 from 'crypto-js/sha256';
 import hmacSHA512 from 'crypto-js/hmac-sha512';
 import Base64 from 'crypto-js/enc-base64';
-import { useAdminBlockChainContext } from "../blockchain_context/AdminBlockChainContext";
 
 const AdminApplication = createContext()
 
@@ -72,7 +71,7 @@ export const AdminApplicationContext = ({ children }) => {
     //step - 02 - generate hash for user data 
     // const SHA256 = require("crypto-js/sha256");
     const generateHash = () => {
-
+        console.log(application)
         const message = application.aadharNo + application.panNo +
             application.patientName + application.patientTag +
             eligibility.disease + eligibility.askingValue +

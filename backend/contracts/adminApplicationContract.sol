@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract adminContract {
+contract adminApplicationContract {
     
     struct adminApplication {
         address admin;

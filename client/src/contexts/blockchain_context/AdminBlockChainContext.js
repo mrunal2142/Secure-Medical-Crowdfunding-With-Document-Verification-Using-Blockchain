@@ -16,8 +16,9 @@ export const AdminBlockChainContext = ({ children }) => {
         loaderFlag: false
     })
 
-    const { contract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
-
+    // const { contract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
+    const { contract } = useContract('0xfD8545c2A69d93C20f40019C764845562864f18b')
+    
     const { mutateAsync: createApplication } = useContractWrite(contract, "createApplication")
 
     const createApplicationTransaction = async (obj) => {

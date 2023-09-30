@@ -14,7 +14,7 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <ThirdwebProvider activeChain={ Sepolia } >
+    <ThirdwebProvider activeChain={ Sepolia } clientId="d1286aa673e8c5b20a7429213b4dfb9d" >
       <App />
     </ThirdwebProvider>
   </React.StrictMode>

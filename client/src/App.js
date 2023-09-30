@@ -7,6 +7,7 @@ import { EstimatedDataContext } from './contexts/admin_context/EstimatedDataCont
 import { AdminApplicationContext } from './contexts/admin_context/AdminApplicationContext';
 import { WalletConnectContext } from './contexts/blockchain_context/walletConnectContext';
 import { AdminBlockChainContext } from './contexts/blockchain_context/AdminBlockChainContext';
+import { CampaignBlockchainContext } from './contexts/blockchain_context/CampaignBlockchainContext';
 
 
 const App = () => {
@@ -15,11 +16,9 @@ const App = () => {
     <BrowserRouter>
       <AdminLoginContext>
         <WalletConnectContext>
+          <CampaignBlockchainContext>
 
           <AdminBlockChainContext>
-
-
-
             <EstimatedDataContext>
               <AdminApplicationContext>
                 <React.Fragment>
@@ -43,8 +42,9 @@ const App = () => {
                 </React.Fragment>
               </AdminApplicationContext>
             </EstimatedDataContext>
-
           </AdminBlockChainContext>
+          
+          </CampaignBlockchainContext>
 
         </WalletConnectContext>
       </AdminLoginContext>
