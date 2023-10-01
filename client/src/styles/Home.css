@@ -3,6 +3,10 @@
   opacity: 0.2;
 }
 
+.hoverClass:hover {
+  cursor: pointer;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

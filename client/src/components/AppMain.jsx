@@ -7,27 +7,30 @@ const AppMain = () => {
     <React.Fragment>
       <div
         className="container d-flex   flex-column   p-3 "
-        style={{ height: '90vh' }}
+        style={{
+          height: '90vh',
+
+          textAlign: 'justify',
+          textJustify: 'inter-word',
+        }}
       >
         <span className="justify-content-center fs-1 text-center ms-5 me-5 mt-5 mb-4">
           Secure Medical Crowd Funding with document verfication using
           Blockchain
         </span>
-        <p className="fs-6 text-center p-3 ms-5 me-5">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed a ex
-          accumsan, condimentum dolor at, porta massa. Aliquam commodo, sem quis
-          rhoncus egestas, eros sapien volutpat lectus, ac ornare turpis dui
-          vitae mauris. Integer ac mattis eros, a malesuada neque. Sed nibh
-          justo, mollis tristique metus id, ullamcorper sodales metus. Ut
-          euismod varius placerat. Vivamus rutrum dictum felis. Nulla pharetra
-          ipsum sed leo feugiat, sed commodo ligula elementum. Cras sit amet
-          turpis congue, mattis ipsum sit amet, venenatis tortor. Aenean mi
-          libero, fringilla id consectetur sit amet, tincidunt sed dui. Cras
-          efficitur hendrerit ligula, sit amet vulputate metus commodo sed.
-          Nulla tincidunt tortor venenatis, ullamcorper mi vel, sodales dolor.
-          Fusce nec justo at leo blandit ullamcorper at vitae nunc. Fusce eu
-          risus id mi interdum hendrerit. Maecenas laoreet congue imperdiet.
-          Nullam id maximus felis.
+        <p className="fs-6 p-3 ms-5 me-5">
+          Medical crowdfunding has emerged as a paramount means of financial
+          support for individuals facing healthcare-induced financial issues.
+          However, most of the existing platforms have problems related to
+          security, transparency, and fraudulent information for funding. The
+          proposed solution leverages blockchain technology and its key factors
+          to tackle these issues, curating a secure and efficient platform for
+          crowdfunding. The proposed system integrates blockchain key features
+          like immutability & transparency to ensure the virtue of medical
+          funding campaigns along with document verification, ensuring funds for
+          genuine cases and minimizing fraudulent cases. Integration of
+          blockchain offers a robust solution with enhanced security,
+          transparency & trust of potential donors.
         </p>
 
         <div className="d-flex gap-3 ms-5 me-5 p-3">

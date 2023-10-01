@@ -1,15 +1,14 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAdminApplicationContext } from '../contexts/admin_context/AdminApplicationContext'
 import { useEstimatedDataContext } from '../contexts/admin_context/EstimatedDataContext'
 import '../styles/Home.css'
 import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
 import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
-import {Loader} from './ComponentsIndex'
+
 
 const AdminApplications = () => {
   const {
-    initalEligibilityState,
-    initialApplicationState,
     eligibility,
     setEligibility,
     showCheckAlert,
@@ -24,6 +23,7 @@ const AdminApplications = () => {
   const { createApplicationTransaction } = useAdminBlockChainContext()
   const { address } = useWallectConnectContext()
 
+  const navigate = useNavigate()
   const handleClick = async () => {
     const obj = {
       ...eligibility,
@@ -32,6 +32,7 @@ const AdminApplications = () => {
       address: address,
     }
     await createApplicationTransaction(obj)
+    navigate('/admin/dashboard')
   }
 
   return (
