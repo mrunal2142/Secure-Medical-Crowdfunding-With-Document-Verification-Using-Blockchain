@@ -6,10 +6,11 @@ import { daysLeft } from '../utils/utils'
 import { useGetCampaignBlockchainContext } from '../contexts/blockchain_context/GetCampaignBlockchainContext'
 import { useCampaignBlockchainContext } from '../contexts/blockchain_context/CampaignBlockchainContext'
 import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
+import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
 
 const CampaignDetails = () => {
   const { address } = useWallectConnectContext()
-
+  const {setTemp} = useAdminBlockChainContext()
   const { state } = useLocation()
 
   const remainingDays = daysLeft(state.deadline)
@@ -26,13 +27,19 @@ const CampaignDetails = () => {
       patientName: data.patientName,
       patientTag: data.patientTag,
       disease: data.disease,
+
+      admin: data.admin,
+      aadharNo: data.aadharNo.toString(),
+
+      amount: data.amount,
+      fundRaiserName: data.fundRaiserName,
+      adminHashCode: data.adminHashCode,
     })
-    console.log(adminInfo)
   }
   useEffect(() => {
     getAdminInfo()
   }, [])
-
+  
   const { donateTransaction } = useGetCampaignBlockchainContext()
 
   const { setShowLoader } = useCampaignBlockchainContext()
@@ -70,6 +77,8 @@ const CampaignDetails = () => {
       })
     }, 3000)
   }
+
+
 
   return (
     <React.Fragment>
@@ -114,8 +123,8 @@ const CampaignDetails = () => {
               {adminInfo.disease}
             </span>
             <span className="fs-6">
-              <span className="fw-medium">Patient Tag - </span>
-              {adminInfo.patientTag}
+              <span className="fw-medium">PAN Number - </span>
+              {adminInfo.panNo}
             </span>
             <span className="fs-6">
               <span className="fw-medium">Aadhar Number - </span>
@@ -125,6 +134,16 @@ const CampaignDetails = () => {
               <span className="fw-medium">Owner - </span>
               {state.owner}
             </span>
+
+            <button type="button" class="btn btn-primary btn-sm mt-2" 
+            
+              onClick={() => {
+                setTemp({
+                  application:adminInfo, 
+                  showToggle:true
+                })
+              }}
+            >View Details</button>
           </div>
         </div>
 
@@ -196,9 +215,12 @@ const CampaignDetails = () => {
               </div>
 
               {state.owner === address ? (
-                <button type="submit" className="btn btn-primary w-100 disabled">
-                Cannot receive donations from owners.
-              </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100 disabled"
+                >
+                  Cannot receive donations from owners.
+                </button>
               ) : (
                 <button type="submit" className="btn btn-primary w-100">
                   Donate

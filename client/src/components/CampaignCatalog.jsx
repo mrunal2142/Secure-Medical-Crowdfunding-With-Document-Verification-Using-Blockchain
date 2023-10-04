@@ -89,6 +89,8 @@ const CampaignCatalog = () => {
               handleClick={() => handleNavigate(campaign)}
             />
           ))}
+
+          
         </div>
       </div>
     </React.Fragment>

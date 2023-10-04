@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { CampaignNav, Loader } from '../components/ComponentsIndex'
+import { CampaignNav, Loader, Toggle } from '../components/ComponentsIndex'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useCampaignBlockchainContext } from '../contexts/blockchain_context/CampaignBlockchainContext'
+import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
 
 const CrowdFunding = () => {
   const navigation = useNavigate()
@@ -10,6 +11,8 @@ const CrowdFunding = () => {
   }, [])
 
   const { showLoader } = useCampaignBlockchainContext()
+
+  const {  temp } = useAdminBlockChainContext()
 
   return (
     <React.Fragment>
@@ -20,6 +23,7 @@ const CrowdFunding = () => {
         />
       )} 
       <CampaignNav />
+      {temp.showToggle && <Toggle application={temp.application} />}
       <Outlet />
     </React.Fragment>
   )
