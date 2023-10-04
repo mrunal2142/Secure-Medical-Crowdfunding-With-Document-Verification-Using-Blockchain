@@ -6,7 +6,6 @@ import '../styles/Home.css'
 import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
 import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
 
-
 const AdminApplications = () => {
   const {
     eligibility,
@@ -17,7 +16,8 @@ const AdminApplications = () => {
     setApplication,
     setIsVerfied,
     checkEligibility,
-    generateHash,
+    file, setFile, 
+    generateHash,uploadCertificate
   } = useAdminApplicationContext()
   const { estData } = useEstimatedDataContext()
   const { createApplicationTransaction } = useAdminBlockChainContext()
@@ -28,11 +28,14 @@ const AdminApplications = () => {
     const obj = {
       ...eligibility,
       ...application,
+      askingValue: eligibility.askingValue.toString(), 
+      patientTag: file.patientFileURL,
       aadharNo: parseInt(application.aadharNo),
       address: address,
     }
     await createApplicationTransaction(obj)
     navigate('/admin/dashboard')
+    // console.log(obj)
   }
 
   return (
@@ -81,10 +84,10 @@ const AdminApplications = () => {
             </div>
 
             <div className="division-form mt-4 mb-4">
-              <div className="input-group ">
-                <span className="input-group-text">Disease | Asking Value</span>
+              <div className="row ">
+                <span className="input-group-text col-2">Disease</span>
                 <select
-                  className="form-select"
+                  className="form-select col"
                   aria-label="Default select example"
                   onChange={(e) => {
                     setEligibility((prevUser) => ({
@@ -100,21 +103,24 @@ const AdminApplications = () => {
                     </option>
                   ))}
                 </select>
+                <span className="input-group-text col-2 ms-2">
+                  Asking Value
+                </span>
                 <input
                   type="text"
                   aria-label="First name"
-                  className="form-control"
+                  className="form-control col"
                   placeholder="Asking value in $"
-                  onChange={(e) => {
+                  onChange={(e) => { 
                     setEligibility((prevUser) => ({
                       ...prevUser,
-                      askingValue: e.target.value,
+                      askingValue: e.target.value*0.0005,
                     }))
                   }}
                 />
                 <button
                   type="button"
-                  className="btn btn-primary btn "
+                  className="btn btn-primary btn col-2"
                   onClick={checkEligibility}
                 >
                   Check Eligibilty
@@ -142,16 +148,18 @@ const AdminApplications = () => {
             </div>
 
             <div className="mt-4 mb-4">
-              <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Aadhar Number | PAN Number
-                </span>
+              <div className="mb-3">
+                <label for="AadharNumber" className="form-label">
+                  Aadhar Number
+                </label>
+
                 <input
+                  required
                   type="text"
-                  className="form-control"
+                  className="form-control flex-fill"
+                  id="aadharNumber"
                   placeholder="Aadhar Number"
                   aria-label="aadharNumber"
-                  aria-describedby="basic-addon1"
                   onChange={(e) => {
                     setApplication((prev) => ({
                       ...prev,
@@ -159,13 +167,20 @@ const AdminApplications = () => {
                     }))
                   }}
                 />
+              </div>
+
+              <div className="mb-3">
+                <label for="AadharNumber" className="form-label">
+                  PAN Number
+                </label>
 
                 <input
+                  required
                   type="text"
-                  className="form-control"
+                  className="form-control flex-fill"
+                  id="panNumber"
                   placeholder="PAN Number"
                   aria-label="panNumber"
-                  aria-describedby="basic-addon1"
                   onChange={(e) => {
                     setApplication((prev) => ({
                       ...prev,
@@ -175,16 +190,18 @@ const AdminApplications = () => {
                 />
               </div>
 
-              <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Patient's Name | Patient's Tag
-                </span>
+              <div className="mb-3">
+                <label for="AadharNumber" className="form-label">
+                  Patient's Name
+                </label>
+
                 <input
+                  required
                   type="text"
-                  className="form-control"
+                  className="form-control flex-fill"
+                  id="patientName"
                   placeholder="Patient's Name"
                   aria-label="patientName"
-                  aria-describedby="basic-addon1"
                   onChange={(e) => {
                     setApplication((prev) => ({
                       ...prev,
@@ -192,26 +209,40 @@ const AdminApplications = () => {
                     }))
                   }}
                 />
+              </div>
 
+              <div className="mb-3 row">
+                <label for="AadharNumber" className="form-label ">
+                  Patient's Certificate
+                </label>
                 <input
-                  type="text"
-                  className="form-control"
+                  type="file"
+                  className="form-control col ms-2"
                   placeholder="Patient's Tag"
                   aria-label="patientTag"
                   aria-describedby="basic-addon1"
-                  onChange={(e) => {
-                    setApplication((prev) => ({
+                  onChange={(event) => {
+                    setFile((prev) => ({
                       ...prev,
-                      patientTag: e.target.value,
+                      patientFile: event.target.files[0]
                     }))
-                  }}
+                  }}  
                 />
+                <button
+                  type="button"
+                  id="fileUpload"
+                  className="btn btn-primary btn col-2 ms-2"
+                  onClick={uploadCertificate}
+                >
+                  Upload file
+                </button>
               </div>
 
-              <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Disease | Asking Value
-                </span>
+              <div className="mb-3">
+                <label for="AadharNumber" className="form-label">
+                  Disease
+                </label>
+
                 <input
                   type="text"
                   className="form-control"
@@ -221,6 +252,12 @@ const AdminApplications = () => {
                   readOnly
                   value={eligibility.disease}
                 />
+              </div>
+
+              <div className="mb-3">
+                <label for="AadharNumber" className="form-label">
+                  Asking Value
+                </label>
 
                 <input
                   type="text"
@@ -233,10 +270,11 @@ const AdminApplications = () => {
                 />
               </div>
 
-              <div className="input-group mb-3">
-                <span className="input-group-text" id="basic-addon1">
-                  Fund Raiser Name | Hash Code
-                </span>
+              <div className="mb-3">
+                <label for="AadharNumber" className="form-label">
+                  Fund Raiser Name
+                </label>
+
                 <input
                   type="text"
                   className="form-control"
@@ -250,7 +288,10 @@ const AdminApplications = () => {
                     }))
                   }}
                 />
+              </div>
 
+              <div className="input-group mb-3">
+              
                 <input
                   type="text"
                   className="form-control"

@@ -2,13 +2,12 @@ import { createContext, useContext, useEffect, useState } from "react";
 import sha256 from 'crypto-js/sha256';
 import hmacSHA512 from 'crypto-js/hmac-sha512';
 import Base64 from 'crypto-js/enc-base64';
-
+import { storage } from '../../firebase/firebase-config'
+import { ref, uploadBytes } from "firebase/storage";
+import { v4 } from 'uuid'
 const AdminApplication = createContext()
 
 export const AdminApplicationContext = ({ children }) => {
-
-    
-
 
     const initalEligibilityState = {
         disease: "",
@@ -47,7 +46,7 @@ export const AdminApplicationContext = ({ children }) => {
         fetch(`https://script.google.com/macros/s/AKfycbx42WG0AZN1tgpITxpTgzwGW_De2r2ZFNSyZcRCIXte5OGDAJEEuPyx6j0Fl7wh91xk/exec?disease=${eligibility.disease}`)
             .then((res) => res.json())
             .then((entries) => {
-                if ((parseFloat(eligibility.askingValue) * 0.0005) <= parseFloat(entries.data[0].cost_ethereum)) {
+                if ((parseFloat(eligibility.askingValue)) <= parseFloat(entries.data[0].cost_ethereum)) {
                     setCheckAlert({
                         severity: "success",
                         message: "The applicant is eligible for registration | Please wait..."
@@ -68,12 +67,57 @@ export const AdminApplicationContext = ({ children }) => {
             })
     }
 
+    // step - 01 - A - Upload certificate
+    const [file, setFile] = useState({
+        patientFile: null,
+        isUploaded: false,
+        patientFileURL: "s"
+    })
+    const uploadCertificate = () => {
+        
+        document.querySelector('#fileUpload').disabled = true
+        setShowCheckAlert(true)
+        setCheckAlert({
+            severity: "primary",
+            message: "Uploading File. Please wait..."
+        })
+        if (file.patientFile === null) {
+            setCheckAlert({
+                severity: "danger",
+                message: "File not fetched properly. Patient Certificate - NULL"
+            })
+            setTimeout(() => {
+                setShowCheckAlert(false)
+            }, 3000)
+            document.querySelector('#fileUpload').disabled = false
+            return
+        }
+        const storageRef = ref(storage, `Patient-Certificates/${v4()}`);
+        uploadBytes(storageRef, file.patientFile).then((snapshot) => {
+            setCheckAlert({
+                severity: "success",
+                message: "File Uploaded | Please wait..."
+            })
+            setFile((prev) => ({
+                ...prev,
+                isUploaded: true,
+                patientFileURL: snapshot.metadata.fullPath.toString()
+            }))
+            setTimeout(() => {
+                setShowCheckAlert(false)
+            }, 2000)
+        });
+        
+    }
+
     //step - 02 - generate hash for user data 
     // const SHA256 = require("crypto-js/sha256");
     const generateHash = () => {
+        document.querySelector('#generate-hash').disabled = true
         console.log(application)
         const message = application.aadharNo + application.panNo +
-            application.patientName + application.patientTag +
+            application.patientName +
+            // application.patientTag +
             eligibility.disease + eligibility.askingValue +
             application.fundRaiserName,
 
@@ -91,10 +135,11 @@ export const AdminApplicationContext = ({ children }) => {
 
     //step - 03 - manual checkbox
     useEffect(() => {
-        if (isVerified) {
+        if (isVerified && file.isUploaded) {
+            console.log(file)
             document.querySelector('#upload-blockChain').classList.remove('disabled')
         }
-    }, [isVerified])
+    }, [isVerified, file.isUploaded])
 
     //step - 04 - upload data to blockchain - ( done in admin blockchain context )
 
@@ -108,8 +153,9 @@ export const AdminApplicationContext = ({ children }) => {
         checkAlert, setCheckAlert,
         application, setApplication,
         isVerified, setIsVerfied,
-        
-        checkEligibility, generateHash
+        file, setFile,
+
+        checkEligibility, generateHash, uploadCertificate
     }} >
         {children}
     </AdminApplication.Provider>)

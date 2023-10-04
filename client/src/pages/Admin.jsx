@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AdminNav, Loader } from '../components/ComponentsIndex'
+import { AdminNav, Loader, Toggle } from '../components/ComponentsIndex'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useAdminLoginContext } from '../contexts/admin_context/AdminLoginContext'
 import { Alert, AlertTitle } from '@mui/material'
@@ -14,7 +14,7 @@ const Admin = () => {
   const { info, setInfo } = useAdminLoginContext()
   const { getEstimatedData } = useEstimatedDataContext()
   const { address } = useWallectConnectContext()
-  const { showLoader } = useAdminBlockChainContext()
+  const { showLoader, temp } = useAdminBlockChainContext()
 
   useState(() => {
     onAuthStateChanged(auth, (user) => {
@@ -39,11 +39,16 @@ const Admin = () => {
 
   return (
     <React.Fragment>
-      {showLoader.loaderFlag && <Loader
-        title = {showLoader.loaderTitle}
-        message={showLoader.loaderMessage}
-      />}
+      {showLoader.loaderFlag && (
+        <Loader
+          title={showLoader.loaderTitle}
+          message={showLoader.loaderMessage}
+        />
+      )}
       <AdminNav />
+      
+      {temp.showToggle && <Toggle application={temp.application} />}
+      
       <div className="container">
         <div
           className="alert alert-primary mt-2 text-center d-flex flex-column"
@@ -52,7 +57,7 @@ const Admin = () => {
           <strong>Account Information</strong>
           {address ? (
             <span className="text fs-6 p-1">
-              MetaMask Wallet Connected ! @address - {address} {' '}
+              MetaMask Wallet Connected ! @address - {address}{' '}
             </span>
           ) : (
             <strong className="text-danger fs-6">

@@ -3,11 +3,13 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import { useAdminBlockChainContext } from '../contexts/blockchain_context/AdminBlockChainContext'
 import { useWallectConnectContext } from '../contexts/blockchain_context/walletConnectContext'
+import {Toggle} from './ComponentsIndex'
 
 const AdminDashboard = () => {
   const [allApplications, setAllApplications] = useState([])
   const {
     contract,
+    setTemp,
     getAllApplicationsTransaction,
   } = useAdminBlockChainContext()
   const { address } = useWallectConnectContext()
@@ -28,10 +30,16 @@ const AdminDashboard = () => {
     fetchApplications()
   }, [contract])
 
+  // const [temp, setTemp] = useState(null)
+  // useEffect(() => {
+  //   console.log(temp)
+  // }, [temp])
+   
   return (
     <React.Fragment>
+
       <div
-        className="border"
+        className="border "
         id="main-dashboard-div"
         style={{ height: '70vh' }}
       >
@@ -68,33 +76,54 @@ const AdminDashboard = () => {
           </div>
 
           <div id="admin-dashboard-self-data-div overflow-auto ">
-            
             <div className="row border-bottom border-top bg-light  round text-center m-2 mt-4 p-1">
               <div className="col fs-6">Admin</div>
               <div className="col fs-6">Aadhar No</div>
               <div className="col fs-6">Pan No</div>
-              <div className="col fs-6">Patient Name</div>
-              <div className="col fs-6">Patient Tag</div>
-              <div className="col fs-6">Disease</div>
-              <div className="col fs-6">Amount</div>
-              <div className="col fs-6">Fund Raiser</div>
               <div className="col fs-6">HashCode</div>
+              <div className="col fs-6">More Details</div>
             </div>
 
             <div id="data-div" className="m-2 mt-4">
               {allApplications.map((application, index) => (
                 <div className="row  border-bottom p-1 text-center ">
-                  {Object.entries(application).map(([key, value]) => (
+                  {/* {Object.entries(application).map(([key, value]) => (
                     <div className="col fs-6 overflow-auto " key={key}>
                       {value}
                     </div>
-                  ))}
+                    {admin, aadharNo, panNo, patientName, patientTag, disease, amount, fundRaiserName, adminHashCode}
+                  ))} */}
+
+                  <>
+                    <div className="col fs-6 overflow-auto p-3" key={index}>
+                      <span>{application.admin.substring(0, 12)}</span>
+                    </div>
+                    <div className="col fs-6 overflow-auto p-3" key={index}>
+                      <span>{application.aadharNo}</span>
+                    </div>
+                    <div className="col fs-6 overflow-auto p-3" key={index}>
+                      <span>{application.panNo}</span>
+                    </div>
+                    <div className="col fs-6 overflow-auto p-3" key={index}>
+                      <span>{application.adminHashCode}</span>
+                    </div>
+                    <div className="col fs-6 overflow-auto p-3" key={index}>
+                      <button type="button" class="btn btn-primary btn-sm"
+                        onClick={() => {
+                          setTemp({
+                            application:application, 
+                            showToggle:true
+                          })
+                        }}
+                      >
+                        View
+                      </button>
+                    </div>
+                  </>
                 </div>
               ))}
             </div>
-            
           </div>
-          
         </div>
       </div>
     </React.Fragment>

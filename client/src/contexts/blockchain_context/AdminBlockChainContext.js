@@ -1,10 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import {
     useContract,
     useContractWrite,
     useContractRead,
 } from '@thirdweb-dev/react'
-
 
 export const AdminBlockChain = createContext()
 
@@ -18,7 +17,7 @@ export const AdminBlockChainContext = ({ children }) => {
 
     // const { contract } = useContract('0x171B6f6690936709A1974f83c693AD26854e1924')
     const { contract } = useContract('0xfD8545c2A69d93C20f40019C764845562864f18b')
-    
+
     const { mutateAsync: createApplication } = useContractWrite(contract, "createApplication")
 
     const createApplicationTransaction = async (obj) => {
@@ -88,10 +87,17 @@ export const AdminBlockChainContext = ({ children }) => {
         }
     }
 
-
+    const [temp, setTemp] = useState({
+        application: null,
+        showToggle: false
+    })
+    useEffect(() => {
+        console.log(temp)
+    }, [temp])
 
     return (<AdminBlockChain.Provider value={{
         showLoader, setShowerLoader,
+        temp, setTemp,
 
         createApplicationTransaction, getAllApplicationsTransaction
     }}>
