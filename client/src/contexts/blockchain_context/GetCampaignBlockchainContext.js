@@ -11,7 +11,9 @@ export const GetCampaignBlockchain = createContext()
 export const GetCampaignBlockchainContext = ({ children }) => {
 
     const { address } = useWallectConnectContext()
-    const { contract } = useContract('0xb13F0A53508d35413cD5c8e3298ffb31E4B33460')
+    // const { contract } = useContract('0xb13F0A53508d35413cD5c8e3298ffb31E4B33460')
+    // const { contract } = useContract('0xDC24942a711c2d562a9c61514D50a50D105536FC')
+    const { contract } = useContract('0x834ea542005817B1b41c248f05fED960165C0b87')
 
     const getAllCampaignsTransaction = async () => {
         try {

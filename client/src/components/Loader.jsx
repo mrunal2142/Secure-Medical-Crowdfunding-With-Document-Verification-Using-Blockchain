@@ -14,7 +14,7 @@ const Loader = ({title, message}) => {
       </div>
 
       <div>
-        <p>{message}</p>
+        <p className='overflow-auto'>{message}</p>
       </div>
     </div>
   )
