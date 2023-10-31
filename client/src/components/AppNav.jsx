@@ -21,7 +21,7 @@ const AppNav = () => {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://stackoverflow.com/questions/42914666/react-router-external-link"
+              href="https://console.firebase.google.com/project/final-year-project-01-b05fb/authentication/users"
               className="link-dark link-underline-opacity-0 link-underline-opacity-0-hover"
             >
               Master Admin

@@ -3,7 +3,7 @@ export const divisionCardsJson = [
         cardHeader: "Division 1",
         cardTitle: "Master Admin",
         cardDes: "Create admin accounts, read their information, update credentials, and delete accounts when no longer required",
-        link: "https://stackoverflow.com/questions/42914666/react-router-external-link",
+        link: "https://console.firebase.google.com/project/final-year-project-01-b05fb/authentication/users",
         cardFooter: "Heirarchy - 01"
         
     },
